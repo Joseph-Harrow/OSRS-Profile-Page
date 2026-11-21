@@ -5,28 +5,47 @@ app.use(express.static('public'));
 
 module.exports = { app };
 
-let testUrl = "https://api.datamuse.com/words?sl="
-let baseUrl = "https://templeosrs.com/api/player_info.php"
-let Username = []
+let baseUrl = "https://templeosrs.com/api"
 
+//Fetch "player" data from TempleOSRS API
 const getPlayer = async () => {
-  const playerRequestEndpoint = "?player=Settled"
+  const playerRequestEndpoint = "/player_info.php?player=Settled"
   const urlToFetch = baseUrl+playerRequestEndpoint
-  console.log(urlToFetch)
   try{
     let response = await fetch(urlToFetch);
     if (response.ok){
-      Username = await response.json()
+      return await response.json()
     }
   }catch(error){
     console.log(error)
   }
 };
 
-getPlayer()
-console.log(`Outside ${Username}`)
+//Fetch "stats" data from TempleOSRS API
+const getPlayerStats = async () => {
+  const statsRequestEndpoint = "/player_stats.php?player=Settled&date="+Date.now()
+  const urlToFetch = baseUrl+statsRequestEndpoint
+  try{
+    let response = await fetch(urlToFetch);
+    if (response.ok){
+      return await response.json()
+    }
+  }catch(error){
+    console.log(error)
+  }
+};
+
+
 
 app.get('/player', (req, res, next) => {
-   console.log(`Get ${Username}`)
-  res.send(Username);
+  getPlayer().then((out)=>{
+    res.send(out);
+  })
+  
+});
+
+app.get('/stats', (req, res, next) => {
+  getPlayerStats().then((out)=>{
+    res.send(out);
+  })
 });

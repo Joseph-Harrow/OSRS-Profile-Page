@@ -29,7 +29,7 @@ h1{
     margin: 0;
 }
 
-h2{
+#author{
   text-align: right;
   margin: 0;
   color: #FFCF3F;
@@ -64,3 +64,17 @@ li a:hover:not(.active) {
   color: white;
 }
 
+th {
+  border: 2px solid #8c6b48;
+}
+
+table {
+  text-align: center;
+  margin: 20px auto;
+  visibility: hidden;
+}
+
+td {
+  border: 2px solid #8c6b48;
+  width: 300px;
+}
